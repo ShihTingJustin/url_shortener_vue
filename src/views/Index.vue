@@ -2,19 +2,24 @@
   <section class="border">
     <div class="text-center d-flex flex-column">
       <div class="manager d-flex justify-content-end">
-        <router-link to="/manager" class="manager-icon fas fa-list mt-3 mr-3"></router-link>
+        <router-link
+          to="/manager"
+          class="manager-icon fas fa-list mt-3 mr-3"
+        ></router-link>
       </div>
       <div class="logo mt-3">
-        <router-link to="/">URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i></router-link>
+        <router-link to="/"
+          >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
+        ></router-link>
       </div>
       <div class="data-wrap mt-4">
         <form
-          action="/"
-          method="POST"
+          @submit.prevent.stop="handleSubmit"
           class="w-100 d-flex flex-column align-items-center"
         >
           <div style="height: 50px" class="w-75">
             <input
+              v-model="originalUrl"
               required
               type="url"
               name="url"
@@ -23,12 +28,53 @@
               value=""
             />
           </div>
-          <button type="submit" class="submit-btn btn w-25">Shorten</button>
+          <button
+            :disabled="isProcessing"
+            type="submit"
+            class="submit-btn btn w-25"
+          >
+            Shorten
+          </button>
         </form>
       </div>
     </div>
   </section>
 </template>
+
+<script>
+import { apiHelper, Toast } from "../utils/helpers";
+
+export default {
+  data() {
+    return {
+      originalUrl: "",
+      isProcessing: false,
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+        this.isProcessing = true;
+        await apiHelper.post("/urls", {
+          originalUrl: this.originalUrl,
+        });
+        this.$router.push('/short')
+        Toast.fire({
+          icon: "success",
+          title: "Success",
+        });
+      } catch (err) {
+        this.isProcessing = false        
+        Toast.fire({
+          icon: "warning",
+          title: "Please enter valid URL",
+        });
+        console.log(err);
+      }
+    },
+  },
+};
+</script>
 
 <style>
 section {

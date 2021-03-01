@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import NotFound from '../views/NotFound.vue'
 import Index from '../views/Index.vue'
 import Manager from '../views/Manager.vue'
+import ShortUrl from '../views/ShortUrl.vue'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Index,
+  },
+  {
+    path: '/short',
+    name: 'short',
+    component: ShortUrl,
   },
   {
     path: '/manager',
