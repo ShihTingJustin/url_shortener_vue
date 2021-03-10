@@ -12,59 +12,48 @@
           >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
         ></router-link>
       </div>
-      <div class="data-wrap mt-4">
-        <form
-          @submit.prevent.stop="handleSubmit"
-          class="w-100 d-flex flex-column align-items-center"
-        >
-          <div style="height: 50px" class="w-75">
-            <input
-              v-model="originalUrl"
-              required
-              type="url"
-              name="url"
-              placeholder="Please enter URL here"
-              class="input-area w-100 text-center"
-              value=""
-            />
-          </div>
-          <button
-            :disabled="isProcessing"
-            type="submit"
-            class="submit-btn btn w-25"
-          >
-            Shorten
-          </button>
-        </form>
-      </div>
+      <IndexInput 
+      v-if="!isComplete"
+      :is-proccessing="isProcessing"
+      @after-submit="afterSubmit"
+      />
+      <ShortUrl v-else />
     </div>
   </section>
 </template>
 
 <script>
 import { apiHelper, Toast } from "../utils/helpers";
+import IndexInput from "./../components/IndexInput"
+import ShortUrl from "./../components/ShortUrl"
 
 export default {
+  name: "Index",
+  components: {
+    IndexInput,
+    ShortUrl
+  },
   data() {
     return {
-      originalUrl: "",
       isProcessing: false,
+      isComplete: false,
     };
   },
   methods: {
-    async handleSubmit() {
+    async afterSubmit(originalUrl) {
       try {
         this.isProcessing = true;
         await apiHelper.post("/urls", {
-          originalUrl: this.originalUrl,
+          originalUrl
         });
-        this.$router.push('/short')
+        
         Toast.fire({
           icon: "success",
           title: "Success",
         });
+        return (this.isComplete = true);
       } catch (err) {
-        this.isProcessing = false        
+        this.isProcessing = false;
         Toast.fire({
           icon: "warning",
           title: "Please enter valid URL",
@@ -75,85 +64,3 @@ export default {
   },
 };
 </script>
-
-<style>
-section {
-  width: 600px;
-  height: 350px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -180px 0 0 -300px;
-  display: table;
-}
-
-.logo {
-  background-color: transparent;
-  margin-bottom: 5rem;
-}
-
-.logo a:hover {
-  text-decoration: none;
-}
-
-.logo i {
-  color: #7d9ec0;
-}
-
-.logo a:hover i {
-  color: #5a728a;
-  transition-duration: 0.5s;
-  /* box-shadow:  0 0px 30px rgb(194, 194, 194); */
-}
-
-.submit-btn {
-  color: #ececec;
-  margin-top: 1.5rem;
-}
-
-.submit-btn,
-.copy-btn {
-  background-color: #82a5c7;
-}
-
-.submit-btn:hover,
-.copy-btn:hover {
-  background-color: #5a728a;
-  color: #ffffff;
-}
-
-.manager-icon {
-  color: #82a5c7;
-  cursor: pointer;
-}
-
-.manager-icon:hover {
-  color: #5a728a;
-  transition-duration: 0.5s;
-  text-decoration: transparent;
-}
-
-.input-area {
-  border: none;
-  border-bottom: 1px solid #ececec;
-  outline: none;
-  background: transparent;
-  border-radius: 0;
-  letter-spacing: 0.5px;
-}
-
-.valid-input-area,
-.copy-btn {
-  border: none;
-  outline: none;
-}
-
-.input-area,
-.logo a,
-.logo a:hover,
-.valid-input-area,
-.valid-input-area:focus,
-.m-description {
-  color: #2e2e2e;
-}
-</style>
