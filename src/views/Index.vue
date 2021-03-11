@@ -12,41 +12,46 @@
           >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
         ></router-link>
       </div>
-      <IndexInput 
-      v-if="!isComplete"
-      :is-proccessing="isProcessing"
-      @after-submit="afterSubmit"
+      <IndexInput
+        v-if="!isComplete"
+        :is-proccessing="isProcessing"
+        @after-submit="afterSubmit"
       />
-      <ShortUrl v-else />
+      <ShortUrl v-else :short-url="shortUrl" :original-url="originalUrl" />
     </div>
   </section>
 </template>
 
 <script>
 import { apiHelper, Toast } from "../utils/helpers";
-import IndexInput from "./../components/IndexInput"
-import ShortUrl from "./../components/ShortUrl"
+import IndexInput from "./../components/IndexInput";
+import ShortUrl from "./../components/ShortUrl";
 
 export default {
   name: "Index",
   components: {
     IndexInput,
-    ShortUrl
+    ShortUrl,
   },
   data() {
     return {
       isProcessing: false,
       isComplete: false,
+      shortUrl: "",
+      originalUrl: "",
+      baseUrl: "https://url-shortener-api-server.herokuapp.com/",
     };
   },
   methods: {
     async afterSubmit(originalUrl) {
       try {
         this.isProcessing = true;
-        await apiHelper.post("/urls", {
-          originalUrl
+        const res = await apiHelper.post("/urls", {
+          originalUrl,
         });
-        
+        console.log(res)
+        this.shortUrl = this.baseUrl + res.data.data.shortUrl;
+        this.originalUrl = res.data.data.originalUrl;
         Toast.fire({
           icon: "success",
           title: "Success",

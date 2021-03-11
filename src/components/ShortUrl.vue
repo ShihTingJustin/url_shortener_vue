@@ -13,7 +13,7 @@
           name="url"
           placeholder="Please enter URL here"
           class="input-area w-100"
-          value=""
+          :value="shortUrl"
         />
       </div>
       <div class="text-left w-75 mt-4">
@@ -24,7 +24,7 @@
           name="url"
           placeholder="Please enter URL here"
           class="input-area w-100"
-          value=""
+          :value="originalUrl"
         />
       </div>
     </form>
@@ -33,11 +33,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      shortUrl: "",
-      originalUrl: "",
-    };
+  name: "ShortUrl",
+  props: {
+    shortUrl: {
+      type: String,
+      require: true
+    },
+    originalUrl: {
+      type: String,
+      require: true
+    },
   },
 };
 </script>

@@ -41,7 +41,6 @@ export default {
   },
   methods: {
      handleSubmitButtonClick(originalUrl) {
-       console.log('handleSubmitButtonClick')
       this.$emit('after-submit', originalUrl)
     },
   },
