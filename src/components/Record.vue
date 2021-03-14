@@ -25,7 +25,7 @@
             name="url"
             placeholder="Please enter URL here"
             class="input-area w-100"
-            :value="record.shortUrl"
+            :value="baseURL + record.shortUrl"
           />
         </div>
         <div class="text-left w-75 mt-4">
@@ -60,6 +60,11 @@ export default {
     records: {
       type: Array,
     },
+  },
+  data() {
+    return {
+      baseURL:'https://url-shortener-api-server.herokuapp.com/api'
+    }
   },
   mixins: [mixins],
   mounted() {

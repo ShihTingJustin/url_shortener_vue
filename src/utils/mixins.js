@@ -8,7 +8,7 @@ export default {
       clipboard.on("success", () => {
         Toast.fire({
           icon: "success",
-          title: "Success",
+          title: "Copied!",
         });
         console.log("copy successfully");
       });
