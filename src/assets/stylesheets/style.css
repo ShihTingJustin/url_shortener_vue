@@ -13,15 +13,16 @@ section {
   margin-bottom: 5rem;
 }
 
-.logo a:hover {
+.logo div:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .logo i {
   color: #7d9ec0;
 }
 
-.logo a:hover i {
+.logo div:hover i {
   color: #5a728a;
   transition-duration: 0.5s;
   /* box-shadow:  0 0px 30px rgb(194, 194, 194); */

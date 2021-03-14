@@ -31,7 +31,8 @@ export default {
   name: "IndexInput",
   props: {
     isProcessing: {
-      type: Boolean
+      type: Boolean,
+      require: true
     }
   },
   data() {

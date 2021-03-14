@@ -7,14 +7,14 @@
           class="manager-icon fas fa-list mt-3 mr-3"
         ></router-link>
       </div>
-      <div class="logo mt-3">
-        <router-link to="/"
-          >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
-        ></router-link>
+      <div @click="init" class="logo mt-1 mx-auto">
+        <div class="p-3">URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
+        ></div>
       </div>
       <IndexInput
         v-if="!isComplete"
         :is-proccessing="isProcessing"
+        :is-complete="isComplete"
         @after-submit="afterSubmit"
       />
       <ShortUrl v-else :short-url="shortUrl" :original-url="originalUrl" />
@@ -72,6 +72,10 @@ export default {
         console.log(err);
       }
     },
+    init() {
+      this.isProcessing = false
+      this.isComplete = false
+    }
   },
 };
 </script>
