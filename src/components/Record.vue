@@ -1,15 +1,18 @@
 <template>
-  <div class="w-100">
+  <div class="w-100 d-flex flex-column align-items-center">
     <div
       v-for="record in records"
       :key="record._id"
-      class="data-wrap mt-2 border"
+      class="data-wrap my-3 border w-100"
     >
       <form
         action="/"
         method="POST"
         class="w-100 d-flex flex-column align-items-center my-3"
       >
+        <div class="w-100 d-flex justify-content-end">
+          <div class="badge badge-pill badge-danger mr-3">{{ record.click }}</div>
+        </div>
         <div class="text-left w-75">
           <div>
             Short URL
@@ -52,7 +55,7 @@
 </template>
 
 <script>
-import mixins from "../utils/mixins"
+import mixins from "../utils/mixins";
 
 export default {
   name: "Record",
@@ -63,12 +66,12 @@ export default {
   },
   data() {
     return {
-      baseURL:'https://url-shortener-api-server.herokuapp.com/api'
-    }
+      baseURL: "https://url-shortener-api-server.herokuapp.com/api",
+    };
   },
   mixins: [mixins],
   mounted() {
     this.initClipboard();
-  }
+  },
 };
 </script>

@@ -1,14 +1,16 @@
 <template>
   <div class="container d-flex flex-column align-items-center">
     <div class="logo w-100 text-center">
-      <a href="/">URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i></a>
+      <!--note: add Navbar -->
+      <router-link to="/"
+        >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
+      ></router-link>
     </div>
     <Record :records="records" />
-    <a
-      href="/"
-      class="submit-btn btn w-50"
-      style="text-decoration: none; color: #ececec"
-      >Create another</a
+    <router-link
+      to="/"
+      class="submit-btn btn w-50 mb-5"
+      >Create another</router-link
     >
     <div>
       <loading :active.sync="isLoading"></loading>
@@ -28,7 +30,7 @@ export default {
   data() {
     return {
       records: [],
-      isLoading: false
+      isLoading: false,
     };
   },
   created() {
@@ -37,10 +39,10 @@ export default {
   methods: {
     async fetchRecords() {
       try {
-        this.isLoading = true
+        this.isLoading = true;
         const res = await apiHelper.get("/urls/all");
         this.records = res.data.data;
-        this.isLoading = false
+        this.isLoading = false;
       } catch (err) {
         Toast.fire({
           icon: "warning",
