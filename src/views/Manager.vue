@@ -3,7 +3,7 @@
     <div class="logo w-100 text-center">
       <a href="/">URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i></a>
     </div>
-    <Record />
+    <Record :records="records" />
     <a
       href="/"
       class="submit-btn btn w-50"
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { apiHelper, Toast } from "../utils/helpers";
 import Record from "./../components/Record";
 
 export default {
@@ -21,13 +22,27 @@ export default {
   components: {
     Record,
   },
+  data() {
+    return {
+      records: [],
+    };
+  },
   created() {
-
+    this.fetchRecords();
   },
   methods: {
-    fetchRecords() {
-      
-    }
-  }
+    async fetchRecords() {
+      try {
+        const res = await apiHelper.get("/urls/all");
+        this.records = res.data.data;
+      } catch (err) {
+        Toast.fire({
+          icon: "warning",
+          title: "Something wrong ...",
+        });
+        console.log(err)
+      }
+    },
+  },
 };
 </script>

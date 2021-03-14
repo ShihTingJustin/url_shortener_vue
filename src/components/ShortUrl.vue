@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Clipboard from "clipboard";
+import mixins from "../utils/mixins"
 
 export default {
   name: "ShortUrl",
@@ -58,19 +58,9 @@ export default {
       require: true,
     },
   },
+  mixins: [mixins],
   mounted() {
     this.initClipboard();
-  },
-  methods: {
-    initClipboard() {
-      const clipboard = new Clipboard(".copy-link");
-      clipboard.on("success", () => {
-        console.log("copy successfully");
-      });
-      clipboard.on("error", () => {
-        console.log("copy fail");
-      });
-    },
   },
 };
 </script>
