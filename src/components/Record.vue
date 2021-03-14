@@ -8,10 +8,12 @@
       <form
         action="/"
         method="POST"
-        class="w-100 d-flex flex-column align-items-center my-3"
+        class="w-100 d-flex flex-column align-items-center mt-3"
       >
         <div class="w-100 d-flex justify-content-end">
-          <div class="badge badge-pill badge-danger mr-3">{{ record.click }}</div>
+          <div class="badge badge-pill click-counter-icon mr-3">
+            {{ record.click }}
+          </div>
         </div>
         <div class="text-left w-75">
           <div>
@@ -49,10 +51,16 @@
             :value="record.originalUrl"
           />
         </div>
+        <div 
+        class="w-100 text-right"
+        @click="handleDeleteButtonClick(record._id)">
+          <i class="delete-icon fas fa-times mr-2 p-3"></i>
+        </div>
       </form>
     </div>
   </div>
 </template>
+
 
 <script>
 import mixins from "../utils/mixins";
@@ -72,6 +80,11 @@ export default {
   mixins: [mixins],
   mounted() {
     this.initClipboard();
+  },
+  methods: {
+    handleDeleteButtonClick(recordId) {
+      this.$emit("after-delete", recordId);
+    },
   },
 };
 </script>

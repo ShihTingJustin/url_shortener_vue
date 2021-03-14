@@ -6,10 +6,8 @@
         >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
       ></router-link>
     </div>
-    <Record :records="records" />
-    <router-link
-      to="/"
-      class="submit-btn btn w-50 mb-5"
+    <Record :records="records" @after-delete="afterDelete" class="record-card" />
+    <router-link to="/" class="submit-btn btn w-50 mb-5"
       >Create another</router-link
     >
     <div>
@@ -50,6 +48,9 @@ export default {
         });
         console.log(err);
       }
+    },
+    async afterDelete(recordId) {
+      console.log(recordId)
     },
   },
 };
