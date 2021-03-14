@@ -10,6 +10,9 @@
       style="text-decoration: none; color: #ececec"
       >Create another</a
     >
+    <div>
+      <loading :active.sync="isLoading"></loading>
+    </div>
   </div>
 </template>
 
@@ -25,6 +28,7 @@ export default {
   data() {
     return {
       records: [],
+      isLoading: false
     };
   },
   created() {
@@ -33,14 +37,16 @@ export default {
   methods: {
     async fetchRecords() {
       try {
+        this.isLoading = true
         const res = await apiHelper.get("/urls/all");
         this.records = res.data.data;
+        this.isLoading = false
       } catch (err) {
         Toast.fire({
           icon: "warning",
           title: "Something wrong ...",
         });
-        console.log(err)
+        console.log(err);
       }
     },
   },

@@ -19,6 +19,9 @@
       />
       <ShortUrl v-else :short-url="shortUrl" :original-url="originalUrl" />
     </div>
+    <div>
+      <loading :active.sync="isLoading"></loading>
+    </div>
   </section>
 </template>
 
@@ -40,11 +43,13 @@ export default {
       shortUrl: "",
       originalUrl: "",
       baseUrl: "https://url-shortener-api-server.herokuapp.com/",
+      isLoading: false
     };
   },
   methods: {
     async afterSubmit(originalUrl) {
       try {
+        this.isLoading = true
         this.isProcessing = true;
         const res = await apiHelper.post("/urls", {
           originalUrl,
@@ -56,7 +61,8 @@ export default {
           icon: "success",
           title: "Success",
         });
-        return (this.isComplete = true);
+        this.isComplete = true
+        this.isLoading = false
       } catch (err) {
         this.isProcessing = false;
         Toast.fire({
