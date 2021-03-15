@@ -6,7 +6,11 @@
         >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
       ></router-link>
     </div>
-    <Record :records="records" @after-delete="afterDelete" class="record-card" />
+    <Record
+      :records="records"
+      @after-delete="afterDelete"
+      class="record-card"
+    />
     <router-link to="/" class="submit-btn btn w-50 mb-5"
       >Create another</router-link
     >
@@ -19,6 +23,7 @@
 <script>
 import { apiHelper, Toast } from "../utils/helpers";
 import Record from "./../components/Record";
+import Swal from "sweetalert2";
 
 export default {
   name: "Manager",
@@ -50,7 +55,24 @@ export default {
       }
     },
     async afterDelete(recordId) {
-      console.log(recordId)
+      try {
+        const res = await Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, remove it!",
+        });
+        if (res.isConfirmed) {
+          await apiHelper.delete(`/urls/${recordId}`);
+          Swal.fire("Deleted!", "Your file has been removed.", "success");
+          this.fetchRecords();
+        } else return
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

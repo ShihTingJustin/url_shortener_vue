@@ -51,9 +51,10 @@
             :value="record.originalUrl"
           />
         </div>
-        <div 
-        class="w-100 text-right"
-        @click="handleDeleteButtonClick(record._id)">
+        <div
+          class="w-100 text-right"
+          @click="handleDeleteButtonClick(record._id)"
+        >
           <i class="delete-icon fas fa-times mr-2 p-3"></i>
         </div>
       </form>
@@ -74,7 +75,7 @@ export default {
   },
   data() {
     return {
-      baseURL: "https://url-shortener-api-server.herokuapp.com/api",
+      baseURL: "https://url-shortener-api-server.herokuapp.com/",
     };
   },
   mixins: [mixins],
@@ -84,6 +85,7 @@ export default {
   methods: {
     handleDeleteButtonClick(recordId) {
       this.$emit("after-delete", recordId);
+      console.log("delete");
     },
   },
 };
