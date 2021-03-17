@@ -5,7 +5,7 @@
       :key="record._id"
       class="data-wrap my-3 border w-100"
     >
-      <div class="w-100 d-flex justify-content-end mb-n3">
+      <div class="w-100 d-flex justify-content-end">
         <div class="badge badge-pill click-counter-icon mt-2 mr-4">
           {{ record.click }}
         </div>
@@ -13,18 +13,26 @@
       <div
         class="record-wrapper d-flex justify-content-center align-items-center w-100"
       >
-        <div class="meta-data-wrapper ml-3 mr-4" style="width: 35%">
-          <div class="preview-wrapper">
-            <img :src="record.img" class="rounded" width="60%" />
-            <div class="preview-info mt-2">
-              <p class="preview-title">
-                {{ record.title }}
-              </p>
-              <p class="preview-des">{{ record.description }}</p>
-            </div>
+        <div
+          class="meta-data-wrapper ml-3 mr-4"
+        >
+          <div>
+            <img
+              :src="
+                record.img ||
+                'https://upload.wikimedia.org/wikipedia/commons/6/6c/No_image_3x4.svg'
+              "
+              class="meta-image rounded"
+            />
+          </div>
+          <div class="preview-info mt-2">
+            <p class="preview-title">
+              {{ record.title }}
+            </p>
+            <p class="preview-des">{{ record.description }}</p>
           </div>
         </div>
-        <div class="url-wrapper w-75 mr-4">
+        <div class="url-wrapper mr-4" style="width: 65%">
           <form>
             <div class="text-left">
               <div>
