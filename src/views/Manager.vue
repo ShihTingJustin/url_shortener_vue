@@ -1,6 +1,6 @@
 <template>
   <div class="container d-flex flex-column align-items-center">
-    <div class="logo w-100 text-center">
+    <div class="logo w-100 text-center mt-4">
       <!--note: add Navbar -->
       <router-link to="/"
         >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
