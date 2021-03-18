@@ -13,3 +13,9 @@ export const Toast = Swal.mixin({
   showConfirmButton: false,
   timer: 3000
 })
+
+export const redirectToOriginalUrl = async (shortUrl) => {
+  const res = await apiHelper.get(`/${shortUrl}`)
+  console.log(res.data.originalUrl)
+  return res.data.originalUrl
+}
