@@ -49,7 +49,7 @@
                 name="url"
                 placeholder="Please enter URL here"
                 class="input-area w-100"
-                :value="baseURL + record.shortUrl"
+                :value="domain + record.shortUrl"
               />
             </div>
             <div class="text-left mt-4">
@@ -96,7 +96,7 @@ export default {
   },
   data() {
     return {
-      baseURL: "https://url-shortener-api-server.herokuapp.com/",
+      domain: "https://shihtingjustin.github.io/url_shortener_vue/#/",
     };
   },
   mixins: [mixins],

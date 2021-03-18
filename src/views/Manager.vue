@@ -39,7 +39,29 @@ export default {
   created() {
     this.fetchRecords();
   },
+  sockets: {
+    connect() {
+      console.log("[socket] connected");
+    },
+    // async shortUrlClick(data) {
+    //   await this.fetchRecords();
+    //   console.log("get data =>", data);
+    //   let arr = this.records.map((item) => {
+    //     if (item._id === data.id) {
+    //       console.log(50, item);
+    //       item.click = data.shortUrlClick
+    //     }
+    //   });
+    //   return console.log(arr, this.records);
+    // },
+  },
+  beforeDestroy() {
+    this.sockets.unsubscribe("shortUrlClick");
+  },
   methods: {
+    connect() {
+      this.$socket.open(); // start using socket
+    },
     async fetchRecords() {
       try {
         this.isLoading = true;
@@ -69,7 +91,7 @@ export default {
           await apiHelper.delete(`/urls/${recordId}`);
           Swal.fire("Deleted!", "Your file has been removed.", "success");
           this.fetchRecords();
-        } else return
+        } else return;
       } catch (err) {
         console.log(err);
       }
