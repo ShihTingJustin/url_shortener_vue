@@ -96,7 +96,7 @@ export default {
   },
   data() {
     return {
-      domain: "https://shihtingjustin.github.io/url_shortener_vue/#/",
+      domain: process.env.VUE_APP_DOMAIN,
     };
   },
   mixins: [mixins],

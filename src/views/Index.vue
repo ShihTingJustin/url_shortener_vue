@@ -42,7 +42,7 @@ export default {
       isComplete: false,
       shortUrl: "",
       originalUrl: "",
-      baseUrl: "https://url-shortener-api-server.herokuapp.com/",
+      domain: process.env.VUE_APP_DOMAIN,
       isLoading: false
     };
   },
@@ -55,7 +55,7 @@ export default {
           originalUrl,
         });
         console.log(res)
-        this.shortUrl = this.baseUrl + res.data.data.shortUrl;
+        this.shortUrl = this.domain + res.data.data.shortUrl;
         this.originalUrl = res.data.data.originalUrl;
         Toast.fire({
           icon: "success",

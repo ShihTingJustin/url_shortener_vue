@@ -1,11 +1,8 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-//const baseURL = 'http://localhost:3000/api'
-const baseURL = 'https://url-shortener-api-server.herokuapp.com/api'
-
 export const apiHelper = axios.create({
-  baseURL
+  baseURL: process.env.VUE_APP_BASEURL
 })
 
 export const Toast = Swal.mixin({
