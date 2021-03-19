@@ -84,6 +84,11 @@ section {
   color: #ffffff;
 }
 
+.clock-icon {
+  /* background-color: #a6acb1; */
+  color: #82a5c7;
+}
+
 .delete-icon {
   color: #e2eaf1;
   cursor: pointer;

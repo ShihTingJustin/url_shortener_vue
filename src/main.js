@@ -8,7 +8,6 @@ import VueSocketIO from "vue-socket.io"
 
 Vue.config.productionTip = false
 Vue.component('Loading', Loading)
-
 Vue.use(
   new VueSocketIO({
     debug: true,

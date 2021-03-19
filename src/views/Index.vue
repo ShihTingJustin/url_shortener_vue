@@ -64,6 +64,7 @@ export default {
         this.isComplete = true
         this.isLoading = false
       } catch (err) {
+        this.isLoading = false
         this.isProcessing = false;
         Toast.fire({
           icon: "warning",

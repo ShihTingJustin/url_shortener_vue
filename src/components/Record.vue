@@ -7,15 +7,13 @@
     >
       <div class="w-100 d-flex justify-content-end">
         <div class="badge badge-pill click-counter-icon mt-2 mr-4">
-          {{ record.click }}
+          <i class="fas fa-mouse-pointer mr-1"></i>{{ record.click }}
         </div>
       </div>
       <div
         class="record-wrapper d-flex justify-content-center align-items-center w-100"
       >
-        <div
-          class="meta-data-wrapper ml-3 mr-4"
-        >
+        <div class="meta-data-wrapper ml-3 mr-4">
           <div>
             <img
               :src="
@@ -73,11 +71,16 @@
           </form>
         </div>
       </div>
-      <div class="w-100 text-right">
-        <i
-          class="delete-icon fas fa-times mt-n3 mr-1 pt-4 pl-4 pr-4 pb-2"
-          @click="handleDeleteButtonClick(record._id)"
-        ></i>
+      <div class="w-100 d-flex justify-content-end align-items-center">
+        <div class="badge badge-pill clock-icon">
+          <i class="far fa-clock mr-1"></i>{{ record.createdAt | formatDate }}
+        </div>
+        <div>
+          <i
+            class="delete-icon fas fa-times mt-n3 mr-1 pt-4 pl-4 pr-4 pb-2"
+            @click="handleDeleteButtonClick(record._id)"
+          ></i>
+        </div>
       </div>
     </div>
   </div>
@@ -86,6 +89,7 @@
 
 <script>
 import mixins from "../utils/mixins";
+import moment from "moment";
 
 export default {
   name: "Record",
@@ -98,6 +102,11 @@ export default {
     return {
       domain: process.env.VUE_APP_DOMAIN,
     };
+  },
+  filters: {
+    formatDate: function (dataTime) {
+      return moment(dataTime).format("YYYY/MM/DD HH:mm");
+    },
   },
   mixins: [mixins],
   mounted() {
