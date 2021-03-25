@@ -1,0 +1,79 @@
+<template>
+  <div class="d-flex justify-content-center py-5 w-100 h-100 ">
+    <div
+      class="mt-5 d-flex flex-column align-items-center justify-content-center w-75"
+    >
+      <Logo />
+      <div class="w-50">
+        <form class="" @submit.prevent.stop="handleSubmit">
+          <div class="text-center mb-4">
+            <h1 class="h5 mb-3 font-weight-light">Sign In</h1>
+          </div>
+
+          <div class="form-label-group text-left mb-4">
+            <label for="email" class="font-weight-light">email</label>
+            <input
+              id="email"
+              v-model="email"
+              name="email"
+              type="email"
+              class="form-control"
+              placeholder="email"
+              autocomplete="username"
+              required
+              autofocus
+            />
+          </div>
+
+          <div class="form-label-group text-left mb-5">
+            <label for="password" class="font-weight-light">Password</label>
+            <input
+              id="password"
+              v-model="password"
+              name="password"
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+          <SubmitBtn />
+          <div class="text-center mt-4">
+            <p>
+              <router-link to="/signup" class="text-secondary">Sign Up</router-link>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Logo from "./../components/Logo";
+import SubmitBtn from "./../components/SubmitBtn"
+//import authorizationAPI from './../apis/authorization'
+
+export default {
+  name: "SignIn",
+  components: {
+    Logo,
+    SubmitBtn
+  },
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    handleSubmit() {
+      console.log(
+        "handleSubmit",
+        JSON.stringify({ email: this.email, password: this.password })
+      );
+    },
+  },
+};
+</script>

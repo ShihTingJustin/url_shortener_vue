@@ -20,12 +20,17 @@ section {
 
 .logo i {
   color: #7d9ec0;
+  transition-duration: 0.5s;
 }
 
 .logo div:hover i {
   color: #5a728a;
   transition-duration: 0.5s;
   /* box-shadow:  0 0px 30px rgb(194, 194, 194); */
+}
+
+.logo-text:hover {
+  text-decoration: none;
 }
 
 .submit-btn {
@@ -53,6 +58,20 @@ section {
   color: #5a728a;
   transition-duration: 0.5s;
   text-decoration: transparent;
+}
+
+.nav-btn:hover {
+  color: #000000;
+  transition-duration: 0.5s;
+}
+
+.sign-up-btn-wrapper {
+  transition-duration: 0.5s;
+}
+
+.sign-up-btn-wrapper:hover {
+  background-color: #eceff3;
+  transition-duration: 0.5s;
 }
 
 .input-area {
@@ -92,6 +111,11 @@ section {
 .delete-icon {
   color: #e2eaf1;
   cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+.nav-btn {
+  color: #aaaeb3;
   transition-duration: 0.5s;
 }
 
