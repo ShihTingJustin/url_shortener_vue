@@ -56,6 +56,7 @@
 import Logo from "./../components/Logo";
 import SubmitBtn from "./../components/SubmitBtn";
 import authorizationAPI from "./../apis/authorization.js";
+import { Toast } from "./../utils/helpers";
 
 export default {
   name: "SignIn",
@@ -72,15 +73,28 @@ export default {
   methods: {
     async afterSubmit() {
       try {
+        if (!this.email || !this.password) {
+          Toast.fire({
+            icon: "warning",
+            title: "Please fill in both email and password",
+          });
+          return;
+        }
         const res = await authorizationAPI.signIn({
           email: this.email,
           password: this.password,
         });
         const { data } = res;
+        if (data.status !== "success") throw new Error(data.message);
         localStorage.setItem("token", data.token);
         this.$router.push("/manager");
       } catch (err) {
         console.log(err);
+        this.password = "";
+        Toast.fire({
+          icon: "warning",
+          title: "Invalid email or password ",
+        });
       }
     },
   },
