@@ -1,11 +1,11 @@
 <template>
-  <div class="d-flex justify-content-center py-5 w-100 h-100 ">
+  <div class="d-flex justify-content-center py-5 w-100 h-100">
     <div
       class="mt-5 d-flex flex-column align-items-center justify-content-center w-75"
     >
       <Logo />
       <div class="w-50">
-        <form class="" @submit.prevent.stop="handleSubmit">
+        <form @submit.prevent.stop="afterSubmit">
           <div class="text-center mb-4">
             <h1 class="h5 mb-3 font-weight-light">Sign In</h1>
           </div>
@@ -41,7 +41,9 @@
           <SubmitBtn />
           <div class="text-center mt-4">
             <p>
-              <router-link to="/signup" class="text-secondary">Sign Up</router-link>
+              <router-link to="/signup" class="text-secondary"
+                >Sign Up</router-link
+              >
             </p>
           </div>
         </form>
@@ -52,14 +54,14 @@
 
 <script>
 import Logo from "./../components/Logo";
-import SubmitBtn from "./../components/SubmitBtn"
-//import authorizationAPI from './../apis/authorization'
+import SubmitBtn from "./../components/SubmitBtn";
+import authorizationAPI from "./../apis/authorization.js";
 
 export default {
   name: "SignIn",
   components: {
     Logo,
-    SubmitBtn
+    SubmitBtn,
   },
   data() {
     return {
@@ -68,11 +70,18 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      console.log(
-        "handleSubmit",
-        JSON.stringify({ email: this.email, password: this.password })
-      );
+    async afterSubmit() {
+      try {
+        const res = await authorizationAPI.signIn({
+          email: this.email,
+          password: this.password,
+        });
+        const { data } = res;
+        localStorage.setItem("token", data.token);
+        this.$router.push("/manager");
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };
