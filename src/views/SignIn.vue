@@ -87,6 +87,7 @@ export default {
         const { data } = res;
         if (data.status !== "success") throw new Error(data.message);
         localStorage.setItem("token", data.token);
+        this.$store.commit('setCurrentUser', data.user)
         this.$router.push("/manager");
       } catch (err) {
         console.log(err);

@@ -43,7 +43,10 @@ export default {
     async fetchRecords() {
       try {
         this.isLoading = true;
-        const res = await apiHelper.get("/urls/all");
+        const getToken = () => localStorage.getItem("token");
+        const res = await apiHelper.get("/urls/all", {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        });
         this.records = res.data.data;
         this.isLoading = false;
       } catch (err) {
