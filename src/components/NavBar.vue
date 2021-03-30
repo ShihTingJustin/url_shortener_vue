@@ -4,22 +4,22 @@
       <Logo v-if="currentPage !== 'root'" class="m-auto" />
     </div>
     <div class="header-right d-flex">
-      <div v-if="currentUser" class="">
+      <div v-if="isAuthenticated" class="">
         <router-link to="manager" class="btn nav-btn font-weight-light px-3">
           {{ currentUser.name }}
         </router-link>
       </div>
-      <div v-if="currentUser" class="">
-        <router-link to="signin" class="btn nav-btn font-weight-light px-3">
+      <div v-if="isAuthenticated">
+        <router-link to="" class="btn nav-btn font-weight-light px-3">
           Sign Out
         </router-link>
       </div>
-      <div v-else-if="!currentUser" class="mr-3">
+      <div v-if="!isAuthenticated" class="mr-3">
         <router-link to="signin" class="btn nav-btn font-weight-light px-3">
           Sign In
         </router-link>
       </div>
-      <div v-else class="sign-up-btn-wrapper border rounded-lg mr-2">
+      <div v-if="!isAuthenticated" class="sign-up-btn-wrapper border rounded-lg mr-2">
         <router-link to="signup" class="btn nav-btn font-weight-light px-3">
           Sign Up
         </router-link>
