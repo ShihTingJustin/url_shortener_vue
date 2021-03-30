@@ -1,19 +1,27 @@
 <template>
-  <div>
+  <div class="">
     <NavBar />
     <div class="container d-flex flex-column align-items-center">
       <Record
+        v-if="records.length"
         :records="records"
         @after-delete="afterDelete"
         class="record-card"
       />
-      <router-link to="/" class="submit-btn btn w-50 mb-5"
-        >Create another</router-link
-      >
       <div>
         <loading :active.sync="isLoading"></loading>
       </div>
+      <section v-if="!records.length" class="h6">
+        <p class="p-5">Nothing records here.</p>
+        <p class="p-5">
+          Let's
+          <router-link to="/" class="">create one !</router-link>
+        </p>
+      </section>
     </div>
+    <router-link v-if="records.length" to="/" class="submit-btn btn w-50 mb-5"
+      >Create another</router-link
+    >
   </div>
 </template>
 
@@ -37,20 +45,22 @@ export default {
     };
   },
   created() {
-    this.fetchRecords();
+    this.fetchRecords(this.currentUser.id);
   },
   methods: {
-    async fetchRecords() {
+    async fetchRecords(userId) {
       try {
         this.isLoading = true;
         const getToken = () => localStorage.getItem("token");
         if (!getToken) return this.$router.push("/signin");
 
-        const res = await apiHelper.get("/urls/all", {
+        const res = await apiHelper.get(`/urls/all/${userId}`, {
           headers: { Authorization: `Bearer ${getToken()}` },
         });
-        this.records = res.data.data;
-        this.isLoading = false;
+        if (res.data.data.length) {
+          this.records = res.data.data;
+        }
+        return (this.isLoading = false);
       } catch (err) {
         Toast.fire({
           icon: "warning",
