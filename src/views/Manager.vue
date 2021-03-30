@@ -71,6 +71,8 @@ export default {
     },
     async afterDelete(recordId) {
       try {
+        console.log(recordId)
+        const getToken = () => localStorage.getItem("token");
         const res = await Swal.fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -81,9 +83,11 @@ export default {
           confirmButtonText: "Yes, remove it!",
         });
         if (res.isConfirmed) {
-          await apiHelper.delete(`/urls/${recordId}`);
+          await apiHelper.delete(`/urls/${recordId}`, {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        });
           Swal.fire("Deleted!", "Your file has been removed.", "success");
-          this.fetchRecords();
+          this.fetchRecords(this.currentUser.id);
         } else return;
       } catch (err) {
         console.log(err);
