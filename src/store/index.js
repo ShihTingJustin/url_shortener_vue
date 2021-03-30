@@ -26,9 +26,8 @@ export default new Vuex.Store({
     async fetchCurrentUser({ commit }) {
       try {
         const { data } = await userAPI.getCurrentUser()
-        const { id, name, email } = data
-        commit('setCurrentUser', { id, name, email })
-        console.log('data',data)
+        const { _id, name, email } = data
+        commit('setCurrentUser', { id: _id, name, email })
         if (data.state === 'error') throw new Error(data.message)
       } catch (err) {
         console.log(err)

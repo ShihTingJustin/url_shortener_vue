@@ -1,21 +1,18 @@
 <template>
-  <div class="container d-flex flex-column align-items-center">
-    <div class="logo w-100 text-center mt-4">
-      <!--note: add Navbar -->
-      <router-link to="/"
-        >URL SHORTENER<i class="fas fa-link fa-lg ml-2"></i
-      ></router-link>
-    </div>
-    <Record
-      :records="records"
-      @after-delete="afterDelete"
-      class="record-card"
-    />
-    <router-link to="/" class="submit-btn btn w-50 mb-5"
-      >Create another</router-link
-    >
-    <div>
-      <loading :active.sync="isLoading"></loading>
+  <div>
+    <NavBar />
+    <div class="container d-flex flex-column align-items-center">
+      <Record
+        :records="records"
+        @after-delete="afterDelete"
+        class="record-card"
+      />
+      <router-link to="/" class="submit-btn btn w-50 mb-5"
+        >Create another</router-link
+      >
+      <div>
+        <loading :active.sync="isLoading"></loading>
+      </div>
     </div>
   </div>
 </template>
@@ -23,12 +20,15 @@
 <script>
 import { apiHelper, Toast } from "../utils/helpers";
 import Record from "./../components/Record";
+import NavBar from "./../components/NavBar";
+import { mapState } from "vuex";
 import Swal from "sweetalert2";
 
 export default {
   name: "Manager",
   components: {
     Record,
+    NavBar,
   },
   data() {
     return {
@@ -44,6 +44,8 @@ export default {
       try {
         this.isLoading = true;
         const getToken = () => localStorage.getItem("token");
+        if (!getToken) return this.$router.push("/signin");
+
         const res = await apiHelper.get("/urls/all", {
           headers: { Authorization: `Bearer ${getToken()}` },
         });
@@ -77,6 +79,9 @@ export default {
         console.log(err);
       }
     },
+  },
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"]),
   },
 };
 </script>

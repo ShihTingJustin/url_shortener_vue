@@ -13,7 +13,7 @@ section {
   margin-bottom: 5rem;
 }
 
-.logo div:hover {
+.logo:hover {
   text-decoration: none;
   cursor: pointer;
 }
@@ -23,7 +23,7 @@ section {
   transition-duration: 0.5s;
 }
 
-.logo div:hover i {
+.logo:hover .logo-text i {
   color: #5a728a;
   transition-duration: 0.5s;
   /* box-shadow:  0 0px 30px rgb(194, 194, 194); */
@@ -70,7 +70,7 @@ section {
 }
 
 .sign-up-btn-wrapper:hover {
-  background-color: #eceff3;
+  background-color: #82a5c7;
   transition-duration: 0.5s;
 }
 

@@ -3,13 +3,7 @@
     <NavBar />
     <section class="border rounded-lg">
       <div class="text-center d-flex flex-column">
-        <div class="manager d-flex justify-content-end">
-          <router-link
-            to="/manager"
-            class="manager-icon fas fa-list mt-3 mr-3"
-          ></router-link>
-        </div>
-        <div @click="init" class="mt-1">
+        <div @click="reoladIndexPage()" class="mt-4">
           <Logo />
         </div>
         <IndexInput
@@ -31,8 +25,8 @@
 import { apiHelper, Toast } from "../utils/helpers";
 import IndexInput from "./../components/IndexInput";
 import ShortUrl from "./../components/ShortUrl";
-import NavBar from "./../components/NavBar"
-import Logo from "./../components/Logo"
+import NavBar from "./../components/NavBar";
+import Logo from "./../components/Logo";
 
 export default {
   name: "Index",
@@ -40,7 +34,7 @@ export default {
     IndexInput,
     ShortUrl,
     NavBar,
-    Logo
+    Logo,
   },
   data() {
     return {
@@ -60,7 +54,6 @@ export default {
         const res = await apiHelper.post("/urls", {
           originalUrl,
         });
-        console.log(res);
         this.shortUrl = this.domain + res.data.data.shortUrl;
         this.originalUrl = res.data.data.originalUrl;
         Toast.fire({
@@ -79,7 +72,8 @@ export default {
         console.log(err);
       }
     },
-    init() {
+    reoladIndexPage() {
+      this.$router.go();
       this.isProcessing = false;
       this.isComplete = false;
     },
