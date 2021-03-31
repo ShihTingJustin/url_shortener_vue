@@ -45,16 +45,15 @@ export default {
     };
   },
   created() {
-    this.fetchRecords(this.currentUser.id);
+    this.fetchRecords();
   },
   methods: {
-    async fetchRecords(userId) {
+    async fetchRecords() {
       try {
-        this.isLoading = true;
         const getToken = () => localStorage.getItem("token");
-        if (!getToken) return this.$router.push("/signin");
-
-        const res = await apiHelper.get(`/urls/all/${userId}`, {
+        if (!getToken()) return this.$router.push("/signin");
+        this.isLoading = true;
+        const res = await apiHelper.get("/urls/all", {
           headers: { Authorization: `Bearer ${getToken()}` },
         });
         if (res.data.data.length) {
@@ -71,7 +70,7 @@ export default {
     },
     async afterDelete(recordId) {
       try {
-        console.log(recordId)
+        console.log(recordId);
         const getToken = () => localStorage.getItem("token");
         const res = await Swal.fire({
           title: "Are you sure?",
@@ -84,8 +83,8 @@ export default {
         });
         if (res.isConfirmed) {
           await apiHelper.delete(`/urls/${recordId}`, {
-          headers: { Authorization: `Bearer ${getToken()}` },
-        });
+            headers: { Authorization: `Bearer ${getToken()}` },
+          });
           Swal.fire("Deleted!", "Your file has been removed.", "success");
           this.fetchRecords(this.currentUser.id);
         } else return;

@@ -51,8 +51,9 @@ export default {
       try {
         this.isLoading = true;
         this.isProcessing = true;
-        const res = await apiHelper.post("/urls", {
-          originalUrl,
+        const getToken = () => localStorage.getItem("token");
+        const res = await apiHelper.post("/urls", { originalUrl }, {
+          headers: { Authorization: `Bearer ${getToken()}` }
         });
         this.shortUrl = this.domain + res.data.data.shortUrl;
         this.originalUrl = res.data.data.originalUrl;
