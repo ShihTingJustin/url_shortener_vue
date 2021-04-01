@@ -12,6 +12,8 @@ export default new Vuex.Store({
       email: ''
     },
     isAuthenticated: false,
+    isLoading: false,
+    isComplete: false,
     token: ''
   },
   mutations: {
@@ -28,14 +30,17 @@ export default new Vuex.Store({
       state.isAuthenticated = false
       state.token = ''
       localStorage.removeItem('token')
+    },
+    switchState(state, params) {
+      state[params.status] = params.boolean
     }
   },
   actions: {
     async fetchCurrentUser({ commit }) {
       try {
         const { data } = await userAPI.getCurrentUser()
-        const { _id, name, email } = data
-        commit('setCurrentUser', { id: _id, name, email })
+        const { id, name, email } = data
+        commit('setCurrentUser', { id, name, email })
         if (data.state === 'error') throw new Error(data.message)
       } catch (err) {
         console.log(err)

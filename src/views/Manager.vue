@@ -52,15 +52,16 @@ export default {
       try {
         const getToken = () => localStorage.getItem("token");
         if (!getToken()) return this.$router.push("/signin");
-        this.isLoading = true;
+        this.$store.commit("switchState", {status:"isLoading",boolean: true});
         const res = await apiHelper.get("/urls/all", {
           headers: { Authorization: `Bearer ${getToken()}` },
         });
         if (res.data.data.length) {
           this.records = res.data.data;
         }
-        return (this.isLoading = false);
+        this.$store.commit("switchState", {status:"isLoading",boolean: false});
       } catch (err) {
+        this.$store.commit("switchState", {status:"isLoading", boolean:false});
         Toast.fire({
           icon: "warning",
           title: "Something wrong ...",

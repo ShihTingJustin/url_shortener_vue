@@ -10,12 +10,12 @@
           required
           type="url"
           name="url"
-          placeholder="Please enter URL here"
+          placeholder="Shorten your link"
           class="input-area w-100 text-center"
         />
       </div>
       <button
-        :disabled="isProcessing"
+        :disabled="isLoading"
         type="submit"
         class="submit-btn btn w-25"
       >
@@ -30,9 +30,8 @@
 export default {
   name: "IndexInput",
   props: {
-    isProcessing: {
+    isLoading: {
       type: Boolean,
-      require: true
     }
   },
   data() {

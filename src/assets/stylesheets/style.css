@@ -29,6 +29,10 @@ section {
   /* box-shadow:  0 0px 30px rgb(194, 194, 194); */
 }
 
+.logo-text {
+  letter-spacing: 1.5px;
+}
+
 .logo-text:hover {
   text-decoration: none;
 }
@@ -40,24 +44,27 @@ section {
 
 .submit-btn,
 .copy-btn {
-  background-color: #82a5c7;
+  background-color: #7d9ec0;
+  transition-duration: 0.5s;
 }
 
 .submit-btn:hover,
 .copy-btn:hover {
   background-color: #5a728a;
   color: #ffffff;
+  transition-duration: 0.5s;
 }
 
 .manager-icon, .copy-icon {
   color: #82a5c7;
   cursor: pointer;
+  transition-duration: 0.5s;
 }
 
 .manager-icon:hover, .copy-icon:hover {
   color: #5a728a;
-  transition-duration: 0.5s;
   text-decoration: transparent;
+  transition-duration: 0.5s;
 }
 
 .nav-btn:hover {
@@ -66,11 +73,12 @@ section {
 }
 
 .sign-up-btn-wrapper {
+  border: 1.5px solid #e2e2e2;
   transition-duration: 0.5s;
 }
 
 .sign-up-btn-wrapper:hover {
-  background-color: #82a5c7;
+  border: 1.5px solid #000000;
   transition-duration: 0.5s;
 }
 
@@ -80,7 +88,8 @@ section {
   outline: none;
   background: transparent;
   border-radius: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  font-size: x-small;
 }
 
 .valid-input-area,

@@ -8,7 +8,7 @@
         </div>
         <IndexInput
           v-if="!isComplete"
-          :is-proccessing="isProcessing"
+          :is-loading="isLoading"
           :is-complete="isComplete"
           @after-submit="afterSubmit"
         />
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { apiHelper, Toast } from "../utils/helpers";
 import IndexInput from "./../components/IndexInput";
 import ShortUrl from "./../components/ShortUrl";
@@ -38,34 +39,52 @@ export default {
   },
   data() {
     return {
-      isProcessing: false,
-      isComplete: false,
       shortUrl: "",
       originalUrl: "",
       domain: process.env.VUE_APP_DOMAIN,
-      isLoading: false,
     };
   },
   methods: {
     async afterSubmit(originalUrl) {
       try {
-        this.isLoading = true;
-        this.isProcessing = true;
-        const getToken = () => localStorage.getItem("token");
-        const res = await apiHelper.post("/urls", { originalUrl }, {
-          headers: { Authorization: `Bearer ${getToken()}` }
+        if (!this.$store.state.isAuthenticated)
+          return this.$router.push("/signin");
+
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: true,
         });
+        const getToken = () => localStorage.getItem("token");
+        const res = await apiHelper.post(
+          "/urls",
+          { originalUrl },
+          {
+            headers: { Authorization: `Bearer ${getToken()}` },
+          }
+        );
         this.shortUrl = this.domain + res.data.data.shortUrl;
         this.originalUrl = res.data.data.originalUrl;
         Toast.fire({
           icon: "success",
           title: "Success",
         });
-        this.isComplete = true;
-        this.isLoading = false;
+        this.$store.commit("switchState", {
+          status: "isComplete",
+          boolean: true,
+        });
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: false,
+        });
       } catch (err) {
-        this.isLoading = false;
-        this.isProcessing = false;
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: false,
+        });
+        this.$store.commit("switchState", {
+          status: "isComplete",
+          boolean: false,
+        });
         Toast.fire({
           icon: "warning",
           title: "Please enter valid URL",
@@ -74,10 +93,15 @@ export default {
       }
     },
     reoladIndexPage() {
+      this.$store.commit("switchState", {
+        status: "isComplete",
+        boolean: false,
+      });
       this.$router.go();
-      this.isProcessing = false;
-      this.isComplete = false;
     },
+  },
+  computed: {
+    ...mapState(["isAuthenticated", "isLoading", "isComplete"]),
   },
 };
 </script>

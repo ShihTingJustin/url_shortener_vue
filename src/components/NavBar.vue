@@ -19,7 +19,7 @@
       </div>
       <div
         v-if="!isAuthenticated"
-        class="sign-up-btn-wrapper border rounded-lg mr-2"
+        class="sign-up-btn-wrapper  rounded-lg mr-2"
       >
         <router-link to="signup" class="btn nav-btn font-weight-light px-3">
           Sign Up
