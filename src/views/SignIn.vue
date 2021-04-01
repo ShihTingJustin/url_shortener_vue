@@ -88,7 +88,11 @@ export default {
         if (data.status !== "success") throw new Error(data.message);
         localStorage.setItem("token", data.token);
         this.$store.commit('setCurrentUser', data.user)
-        this.$router.push("/manager");
+        this.$router.push("/");
+        Toast.fire({
+          icon: "success",
+          title: "Sign in successfully",
+        });
       } catch (err) {
         console.log(err);
         this.password = "";

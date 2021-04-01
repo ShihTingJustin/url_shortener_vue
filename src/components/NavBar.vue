@@ -30,9 +30,9 @@
 </template>
 
 <script>
+import { Toast } from "./../utils/helpers";
 import { mapState } from "vuex";
 import Logo from "../components/Logo";
-import store from "../store"
 
 export default {
   name: "NavBar",
@@ -46,9 +46,12 @@ export default {
   },
   methods: {
     signOut() {
-      localStorage.removeItem("token");
-      store.dispatch('fetchCurrentUser')
-      this.$router.push('/')
+      this.$store.commit("removeAuthentication");
+      this.$router.push("/");
+      Toast.fire({
+        icon: "success",
+        title: "Sign out successfully",
+      });
     },
   },
   computed: {

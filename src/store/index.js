@@ -11,7 +11,8 @@ export default new Vuex.Store({
       name: '',
       email: ''
     },
-    isAuthenticated: false
+    isAuthenticated: false,
+    token: ''
   },
   mutations: {
     setCurrentUser(state, currentUser) {
@@ -20,6 +21,13 @@ export default new Vuex.Store({
         ...currentUser
       }
       state.isAuthenticated = true
+      state.token = localStorage.getItem('token')
+    },
+    removeAuthentication(state) {
+      state.currentUser = {}
+      state.isAuthenticated = false
+      state.token = ''
+      localStorage.removeItem('token')
     }
   },
   actions: {
