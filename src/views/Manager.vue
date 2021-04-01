@@ -3,25 +3,28 @@
     <NavBar />
     <div class="container d-flex flex-column align-items-center">
       <Record
-        v-if="records.length"
-        :records="records"
+        v-if="initialRecords.length"
+        :initial-records="initialRecords"
         @after-delete="afterDelete"
         class="record-card"
       />
       <div>
         <loading :active.sync="isLoading"></loading>
       </div>
-      <section v-if="!records.length" class="h6">
-        <p class="p-5">Nothing records here.</p>
-        <p class="p-5">
-          Let's
-          <router-link to="/" class="">create one !</router-link>
-        </p>
-      </section>
     </div>
-    <router-link v-if="records.length" to="/" class="submit-btn btn w-50 mb-5"
+    <router-link
+      v-if="initialRecords.length"
+      to="/"
+      class="submit-btn btn w-50 mb-5"
       >Create another</router-link
     >
+    <div v-if="!initialRecords.length" class="h6">
+      <p class="p-5">Nothing records here.</p>
+      <p class="p-5">
+        Let's
+        <router-link to="/" class="">create one !</router-link>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -40,7 +43,7 @@ export default {
   },
   data() {
     return {
-      records: [],
+      initialRecords: [],
       isLoading: false,
     };
   },
@@ -52,16 +55,23 @@ export default {
       try {
         const getToken = () => localStorage.getItem("token");
         if (!getToken()) return this.$router.push("/signin");
-        this.$store.commit("switchState", {status:"isLoading",boolean: true});
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: true,
+        });
         const res = await apiHelper.get("/urls/all", {
           headers: { Authorization: `Bearer ${getToken()}` },
         });
-        if (res.data.data.length) {
-          this.records = res.data.data;
-        }
-        this.$store.commit("switchState", {status:"isLoading",boolean: false});
+        this.initialRecords = res.data.data;
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: false,
+        });
       } catch (err) {
-        this.$store.commit("switchState", {status:"isLoading", boolean:false});
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: false,
+        });
         Toast.fire({
           icon: "warning",
           title: "Something wrong ...",
@@ -71,7 +81,6 @@ export default {
     },
     async afterDelete(recordId) {
       try {
-        console.log(recordId);
         const getToken = () => localStorage.getItem("token");
         const res = await Swal.fire({
           title: "Are you sure?",
@@ -86,7 +95,7 @@ export default {
           await apiHelper.delete(`/urls/${recordId}`, {
             headers: { Authorization: `Bearer ${getToken()}` },
           });
-          Swal.fire("Deleted!", "Your file has been removed.", "success");
+          Swal.fire("Deleted!", "Your URL has been removed.", "success");
           this.fetchRecords(this.currentUser.id);
         } else return;
       } catch (err) {

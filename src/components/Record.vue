@@ -82,6 +82,7 @@
           ></i>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -94,12 +95,13 @@ import moment from "moment";
 export default {
   name: "Record",
   props: {
-    records: {
+    initialRecords: {
       type: Array,
     },
   },
   data() {
     return {
+      records: this.initialRecords,
       domain: process.env.VUE_APP_DOMAIN,
     };
   },
@@ -115,7 +117,6 @@ export default {
   methods: {
     handleDeleteButtonClick(recordId) {
       this.$emit("after-delete", recordId);
-      console.log("delete");
     },
   },
 };
