@@ -3,7 +3,7 @@
     <NavBar />
     <section class="border rounded-lg">
       <div class="text-center d-flex flex-column">
-        <div @click="reoladIndexPage()" class="mt-4">
+        <div class="mt-4">
           <Logo />
         </div>
         <IndexInput
@@ -91,13 +91,6 @@ export default {
         });
         console.log(err);
       }
-    },
-    reoladIndexPage() {
-      this.$store.commit("switchState", {
-        status: "isComplete",
-        boolean: false,
-      });
-      this.$router.go();
     },
   },
   computed: {
