@@ -1,10 +1,10 @@
 <template>
-  <div class="">
+  <div>
     <NavBar />
     <div class="container d-flex flex-column align-items-center">
       <Record
-        v-if="initialRecords.length"
-        :initial-records="initialRecords"
+        v-if="records.length"
+        :records="records"
         @after-delete="afterDelete"
         class="record-card"
       />
@@ -12,13 +12,10 @@
         <loading :active.sync="isLoading"></loading>
       </div>
     </div>
-    <router-link
-      v-if="initialRecords.length"
-      to="/"
-      class="submit-btn btn w-50 mb-5"
+    <router-link v-if="records.length" to="/" class="submit-btn btn px-5 mb-5"
       >Create another</router-link
     >
-    <div v-if="!initialRecords.length" class="h6">
+    <div v-if="!records.length" class="h6">
       <p class="p-5">Nothing records here.</p>
       <p class="p-5">
         Let's
@@ -43,8 +40,7 @@ export default {
   },
   data() {
     return {
-      initialRecords: [],
-      isLoading: false,
+      records: [],
     };
   },
   created() {
@@ -62,9 +58,13 @@ export default {
         const res = await apiHelper.get("/urls/all", {
           headers: { Authorization: `Bearer ${getToken()}` },
         });
-        this.initialRecords = res.data.data;
+        this.records = res.data.data;
         this.$store.commit("switchState", {
           status: "isLoading",
+          boolean: false,
+        });
+        this.$store.commit("switchState", {
+          status: "isComplete",
           boolean: false,
         });
       } catch (err) {
@@ -96,7 +96,7 @@ export default {
             headers: { Authorization: `Bearer ${getToken()}` },
           });
           Swal.fire("Deleted!", "Your URL has been removed.", "success");
-          this.fetchRecords(this.currentUser.id);
+          await this.fetchRecords();
         } else return;
       } catch (err) {
         console.log(err);
@@ -104,7 +104,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["currentUser", "isAuthenticated"]),
+    ...mapState(["currentUser", "isAuthenticated", "isLoading"]),
   },
 };
 </script>
