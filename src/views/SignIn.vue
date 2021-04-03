@@ -1,15 +1,14 @@
 <template>
-  <div class="d-flex justify-content-center py-5 w-100 h-100">
+  <div class="d-flex justify-content-center py-5">
     <div
       class="mt-5 d-flex flex-column align-items-center justify-content-center w-75"
     >
       <Logo />
-      <div class="w-50">
+      <div class="signin-wrapper">
         <form @submit.prevent.stop="afterSubmit">
           <div class="text-center mb-4">
             <h1 class="h5 mb-3 font-weight-light">Sign In</h1>
           </div>
-
           <div class="form-label-group text-left mb-4">
             <label for="email" class="font-weight-light">email</label>
             <input
@@ -17,7 +16,7 @@
               v-model="email"
               name="email"
               type="email"
-              class="form-control"
+              class="form-control mx-auto"
               placeholder="email"
               autocomplete="username"
               required
@@ -87,7 +86,7 @@ export default {
         const { data } = res;
         if (data.status !== "success") throw new Error(data.message);
         localStorage.setItem("token", data.token);
-        this.$store.commit('setCurrentUser', data.user)
+        this.$store.commit("setCurrentUser", data.user);
         this.$router.push("/");
         Toast.fire({
           icon: "success",
@@ -105,3 +104,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.signin-wrapper {
+  margin-top: 80px;
+  width: 100%;
+  max-width: 400px;
+}
+</style>

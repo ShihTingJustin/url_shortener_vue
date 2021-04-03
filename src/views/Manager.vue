@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="manager-wrapper d-flex flex-column align-items-center">
     <NavBar />
-    <div class="container d-flex flex-column align-items-center">
+    <div class="container d-flex flex-column align-items-center record-container">
       <Record
         v-if="records.length"
         :records="records"
@@ -12,12 +12,14 @@
         <loading :active.sync="isLoading"></loading>
       </div>
     </div>
-    <router-link v-if="records.length" to="/" class="submit-btn btn px-5 mb-5"
-      >Create another</router-link
-    >
-    <div v-if="!records.length" class="h6">
-      <p class="p-5">Nothing records here.</p>
-      <p class="p-5">
+    <div>
+      <router-link v-if="records.length" to="/" class="submit-btn btn px-5"
+        >Create another</router-link
+      >
+    </div>
+    <div v-if="!records.length && isLoading === false" class="blank-page-text text-center my-auto">
+      <p>Nothing here.</p>
+      <p>
         Let's
         <router-link to="/" class="">create one !</router-link>
       </p>
@@ -108,3 +110,38 @@ export default {
   },
 };
 </script>
+
+<style>
+.manager-wrapper {
+    height: 100%;
+}
+@media (max-width: 576px) {
+  .record-container {
+    margin-top: 50px;
+  }
+
+  .blank-page-text {
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .record-container {
+    margin-top: 70px;
+  }
+  
+  .blank-page-text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .record-container {
+    margin-top: 80px;
+  }
+  
+  .blank-page-text {
+    font-size: 1.3rem;
+  }
+}
+</style>

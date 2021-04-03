@@ -1,15 +1,14 @@
 <template>
-  <div class="d-flex justify-content-center py-5 w-100 h-100">
+  <div class="d-flex justify-content-center py-5">
     <div
-      class="mt-5 d-flex flex-column align-items-center justify-content-center w-75"
+      class="mt-4 d-flex flex-column align-items-center justify-content-center w-75"
     >
       <Logo />
-      <div class="container w-50">
+      <div class="signup-wrapper">
         <form class="w-100" @submit.prevent.stop="handleSubmit">
           <div class="text-center mb-4">
             <h1 class="h5 mb-3 font-weight-light">Sign Up</h1>
           </div>
-
           <div class="form-label-group mb-4 text-left">
             <label for="name" class="font-weight-light">Name</label>
             <input
@@ -24,7 +23,6 @@
               autofocus
             />
           </div>
-
           <div class="form-label-group mb-4 text-left">
             <label for="email" class="font-weight-light">Email</label>
             <input
@@ -38,7 +36,6 @@
               required
             />
           </div>
-
           <div class="form-label-group mb-4 text-left">
             <label for="password" class="font-weight-light">Password</label>
             <input
@@ -52,7 +49,6 @@
               required
             />
           </div>
-
           <div class="form-label-group mb-5 text-left">
             <label for="password-check" class="font-weight-light">Password Check</label>
             <input
@@ -111,3 +107,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.signup-wrapper {
+  margin-top: 70px;
+  width: 100%;
+  max-width: 400px;
+}
+</style>

@@ -1,27 +1,30 @@
 <template>
-  <nav class="navbar h-100">
-    <div class="header-left">
-      <Logo v-if="currentPage !== 'root'" class="mx-auto my-n3" />
+  <nav class="navbar fixed-top bg-white">
+    <div class="header-brand">
+      <Logo class="" v-if="currentPage !== 'root'" />
     </div>
     <div class="header-right d-flex">
       <div v-if="isAuthenticated">
-        <router-link to="manager" class="btn nav-btn font-weight-light px-3">
+        <router-link
+          to="manager"
+          class="btn nav-btn font-weight-light px-1 px-md-3"
+        >
           {{ currentUser.name }}
         </router-link>
-        <div @click="signOut" class="btn nav-btn font-weight-light px-3">
+        <div
+          @click="signOut"
+          class="btn nav-btn font-weight-light px-1 px-md-3 mr-n2"
+        >
           Sign Out
         </div>
       </div>
       <div v-if="!isAuthenticated" class="mr-3">
-        <router-link to="signin" class="btn nav-btn font-weight-light px-3">
+        <router-link to="signin" class="btn nav-btn font-weight-light px-1 px-md-3">
           Sign In
         </router-link>
       </div>
-      <div
-        v-if="!isAuthenticated"
-        class="sign-up-btn-wrapper  rounded-lg mr-2"
-      >
-        <router-link to="signup" class="btn nav-btn font-weight-light px-3">
+      <div v-if="!isAuthenticated" class="sign-up-btn-wrapper rounded-lg mr-n2 mr-md-2">
+        <router-link to="signup" class="btn nav-btn font-weight-light px-1 px-md-3">
           Sign Up
         </router-link>
       </div>
@@ -59,3 +62,43 @@ export default {
   },
 };
 </script>
+
+<style>
+.nav-btn {
+  color: #aaaeb3;
+  transition-duration: 0.5s;
+}
+
+.nav-btn:hover {
+  color: #000000;
+  transition-duration: 0.5s;
+}
+
+.sign-up-btn-wrapper {
+  border: 1.5px solid #e2e2e2;
+  transition-duration: 0.5s;
+}
+
+.sign-up-btn-wrapper:hover {
+  border: 1.5px solid #000000;
+  transition-duration: 0.5s;
+}
+
+@media (max-width: 576px) {
+  .header-brand {
+    height: 40px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .header-brand {
+    height: 50px;
+  }
+}
+
+@media (min-width: 769px) {
+  .header-brand {
+    height: 50px;
+  }
+}
+</style>

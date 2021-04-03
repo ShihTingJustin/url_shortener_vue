@@ -1,20 +1,22 @@
 <template>
-  <div id="Record" class="w-100 h-100 border d-flex flex-column align-items-center">
-    <transition-group name="list-complete" tag="div">
+  <div id="Record" class="w-100">
+    <transition-group name="list-complete" tag="div" class="w-100">
       <div
         v-for="record in records"
         :key="record._id"
-        class="data-wrap my-3 border w-100 list-complete-item"
+        class="record-wrapper data-wrap my-3 border list-complete-item mx-auto"
       >
-        <div class="w-100 d-flex justify-content-end">
+        <div class="d-flex justify-content-end">
           <div class="badge badge-pill click-counter-icon mt-2 mr-4">
             <i class="fas fa-mouse-pointer mr-1"></i>{{ record.click }}
           </div>
         </div>
         <div
-          class="record-wrapper d-flex justify-content-center align-items-center w-100"
+          class="record-info-wrapper d-flex justify-content-center align-items-center"
         >
-          <div class="meta-data-wrapper ml-3 mr-4">
+          <div
+            class="meta-data-wrapper ml-3 mr-4 d-flex flex-column align-items-center justify-content-center"
+          >
             <div class="meta-image-wrapper">
               <img
                 :src="
@@ -25,7 +27,7 @@
               />
             </div>
             <div class="preview-info mt-2">
-              <p class="preview-title">
+              <p class="preview-title text-center">
                 {{ record.title }}
               </p>
               <p class="preview-des">{{ record.description }}</p>
@@ -72,7 +74,7 @@
             </form>
           </div>
         </div>
-        <div class="w-100 d-flex justify-content-end align-items-center">
+        <div class="d-flex justify-content-end align-items-center">
           <div class="badge badge-pill clock-icon">
             <i class="far fa-clock mr-1"></i>{{ record.createdAt | formatDate }}
           </div>
@@ -130,5 +132,113 @@ export default {
 .list-complete-leave-to {
   opacity: 0;
   transform: translateX(500px);
+}
+.copy-icon {
+  color: #82a5c7;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+.copy-icon:hover {
+  color: #5a728a;
+  text-decoration: transparent;
+  transition-duration: 0.5s;
+}
+
+.delete-icon {
+  color: #e2eaf1;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+.delete-icon:hover {
+  color: #82a5c7;
+  transition-duration: 0.5s;
+}
+
+.click-counter-icon {
+  background-color: #82a5c7;
+  color: #ffffff;
+}
+
+.clock-icon {
+  /* background-color: #a6acb1; */
+  color: #82a5c7;
+}
+
+.preview-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.preview-des {
+  font-size: 0.5rem;
+  line-height: 0.9rem;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.meta-data-wrapper {
+  width: 35%;
+}
+
+.record-info-wrapper {
+  height: 100%;
+}
+
+.meta-image {
+  max-width: 100%;
+  max-height: 100%;
+  display: block; 
+  margin: auto;
+}
+
+@media (max-width: 576px) {
+  .record-info-wrapper {
+    max-height: 200px;
+    max-width: 100%;
+  }
+
+  .meta-image-wrapper {
+    width: 125px;
+    height: 70px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .record-info-wrapper {
+    max-height: 250px;
+    max-width: 100%;
+  }
+
+  .meta-image-wrapper {
+    width: 140px;
+    height: 90px;
+  }
+}
+
+@media (min-width: 769px) {
+  .record-info-wrapper {
+    max-height: 330px;
+    max-width: 100%;
+  }
+
+  .meta-image-wrapper {
+    width: 160px;
+    height: 120px;
+  }
+
+  .preview-des {
+    font-size: 0.9rem;
+    line-height: 1rem;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
 }
 </style>

@@ -3,7 +3,7 @@
     <NavBar />
     <section class="border rounded-lg">
       <div class="text-center d-flex flex-column">
-        <div class="mt-4">
+        <div class="d-flex justify-content-center index-logo">
           <Logo />
         </div>
         <IndexInput
@@ -98,3 +98,48 @@ export default {
   },
 };
 </script>
+
+<style>
+section {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: table;
+}
+
+@media (max-width: 576px) {
+  .index-logo {
+    margin-top: 20px;
+  }
+
+  section {
+    width: 350px;
+    height: 100px;
+    margin: -180px 0 0 -175px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .index-logo {
+    margin-top: 35px;
+  }
+
+  section {
+    width: 600px;
+    height: 350px;
+    margin: -180px 0 0 -300px;
+  }
+}
+
+@media (min-width: 769px) {
+  .index-logo {
+    margin-top: 35px;
+  }
+
+  section {
+    width: 600px;
+    height: 350px;
+    margin: -180px 0 0 -300px;
+  }
+}
+</style>
