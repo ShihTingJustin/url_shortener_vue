@@ -19,12 +19,21 @@
         </div>
       </div>
       <div v-if="!isAuthenticated" class="mr-3">
-        <router-link to="signin" class="btn nav-btn font-weight-light px-1 px-md-3">
+        <router-link
+          to="signin"
+          class="btn nav-btn font-weight-light px-1 px-md-3"
+        >
           Sign In
         </router-link>
       </div>
-      <div v-if="!isAuthenticated" class="sign-up-btn-wrapper rounded-lg mr-n2 mr-md-2">
-        <router-link to="signup" class="btn nav-btn font-weight-light px-1 px-md-3">
+      <div
+        v-if="!isAuthenticated"
+        class="sign-up-btn-wrapper rounded-lg mr-n2 mr-md-2"
+      >
+        <router-link
+          to="signup"
+          class="btn nav-btn font-weight-light px-1 px-md-3"
+        >
           Sign Up
         </router-link>
       </div>
@@ -49,7 +58,15 @@ export default {
   },
   methods: {
     signOut() {
+      this.$store.commit("switchState", {
+        status: "isLoading",
+        boolean: true,
+      });
       this.$store.commit("removeAuthentication");
+      this.$store.commit("switchState", {
+        status: "isLoading",
+        boolean: false,
+      });
       this.$router.push("/");
       Toast.fire({
         icon: "success",
@@ -58,7 +75,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["currentUser", "isAuthenticated"]),
+    ...mapState(["currentUser", "isAuthenticated", "isLoading"]),
   },
 };
 </script>
