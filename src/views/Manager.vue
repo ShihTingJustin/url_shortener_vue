@@ -97,8 +97,8 @@ export default {
           await apiHelper.delete(`/urls/${recordId}`, {
             headers: { Authorization: `Bearer ${getToken()}` },
           });
-          Swal.fire("Deleted!", "Your URL has been removed.", "success");
           await this.fetchRecords();
+          Swal.fire("Deleted!", "Your URL has been removed.", "success");
         } else return;
       } catch (err) {
         console.log(err);

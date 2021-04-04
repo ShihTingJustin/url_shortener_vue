@@ -45,6 +45,9 @@
               >
             </p>
           </div>
+          <div>
+            <loading :active.sync="isLoading"></loading>
+          </div>
         </form>
       </div>
     </div>
@@ -56,6 +59,7 @@ import Logo from "./../components/Logo";
 import SubmitBtn from "./../components/SubmitBtn";
 import authorizationAPI from "./../apis/authorization.js";
 import { Toast } from "./../utils/helpers";
+import { mapState } from "vuex";
 
 export default {
   name: "SignIn",
@@ -72,7 +76,15 @@ export default {
   methods: {
     async afterSubmit() {
       try {
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: true,
+        });
         if (!this.email || !this.password) {
+          this.$store.commit("switchState", {
+            status: "isLoading",
+            boolean: false,
+          });
           Toast.fire({
             icon: "warning",
             title: "Please fill in both email and password",
@@ -87,6 +99,10 @@ export default {
         if (data.status !== "success") throw new Error(data.message);
         localStorage.setItem("token", data.token);
         this.$store.commit("setCurrentUser", data.user);
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: false,
+        });
         this.$router.push("/");
         Toast.fire({
           icon: "success",
@@ -94,6 +110,10 @@ export default {
         });
       } catch (err) {
         console.log(err);
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: false,
+        });
         this.password = "";
         Toast.fire({
           icon: "warning",
@@ -101,6 +121,9 @@ export default {
         });
       }
     },
+  },
+  computed: {
+    ...mapState(["isLoading"]),
   },
 };
 </script>
