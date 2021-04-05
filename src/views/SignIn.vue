@@ -38,9 +38,9 @@
             />
           </div>
           <SubmitBtn />
-          <div class="text-center mt-4">
-            <p>
-              <router-link to="/signup" class="text-secondary"
+          <div class="text-center mt-5">
+            <p>Don't have an account ?
+              <router-link to="/signup" class="text-secondary ml-1"
                 >Sign Up</router-link
               >
             </p>

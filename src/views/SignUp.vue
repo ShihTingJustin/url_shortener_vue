@@ -50,7 +50,9 @@
             />
           </div>
           <div class="form-label-group mb-5 text-left">
-            <label for="password-check" class="font-weight-light">Password Check</label>
+            <label for="password-check" class="font-weight-light"
+              >Password Check</label
+            >
             <input
               id="password-check"
               v-model="passwordCheck"
@@ -63,9 +65,9 @@
             />
           </div>
           <SubmitBtn />
-          <div class="text-center mt-4">
-            <p>
-              <router-link to="/signin" class="text-secondary">
+          <div class="text-center mt-5">
+            <p>Already have an account ?
+              <router-link to="/signin" class="text-secondary ml-1">
                 Sign In
               </router-link>
             </p>
@@ -79,6 +81,9 @@
 <script>
 import Logo from "./../components/Logo";
 import SubmitBtn from "./../components/SubmitBtn";
+import authorizationAPI from "./../apis/authorization.js";
+import { Toast } from "./../utils/helpers";
+import { mapState } from "vuex";
 
 export default {
   name: "SignUp",
@@ -95,15 +100,65 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      const data = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        passwordCheck: this.passwordCheck,
-      };
-      console.log("handleSubmit", JSON.stringify(data));
+    async handleSubmit() {
+      try {
+        if (
+          !this.name ||
+          !this.email ||
+          !this.password ||
+          !this.passwordCheck
+        ) {
+          Toast.fire({
+            icon: "warning",
+            title: "Please fill in all fields",
+          });
+          return;
+        }
+        if (this.password !== this.passwordCheck) {
+          Toast.fire({
+            icon: "warning",
+            title: "Password didn't match",
+          });
+          this.passwordCheck = "";
+          return;
+        }
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: true,
+        });
+        const { data } = await authorizationAPI.signUp({
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          passwordCheck: this.passwordCheck,
+        });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+
+        Toast.fire({
+          icon: "success",
+          title: data.message,
+        });
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: false,
+        });
+        this.$router.push("/signin");
+      } catch (error) {
+        this.$store.commit("switchState", {
+          status: "isLoading",
+          boolean: false,
+        });
+        Toast.fire({
+          icon: "warning",
+          title: `Sign up failed - ${error.message}`,
+        });
+      }
     },
+  },
+  computed: {
+    ...mapState(["isLoading"]),
   },
 };
 </script>
