@@ -4,6 +4,7 @@ import NotFound from '../views/NotFound.vue'
 import Index from '../views/Index.vue'
 import SignIn from '../views/SignIn.vue'
 import store from './../store'
+import { apiHelper } from "../utils/helpers";
 
 Vue.use(VueRouter)
 
@@ -30,7 +31,14 @@ const routes = [
   },
   {
     path: '/:shortUrl',
-    component: () => import('../views/Redirect.vue')
+    async beforeEnter(to, from, next) {
+      try {
+        window.location.replace(await redirectToOriginalUrl(to.params.shortUrl))
+        next()
+      } catch (err) {
+        console.log(err)
+      }      
+    }
   },
   {
     path: '*',
@@ -47,5 +55,14 @@ router.beforeEach((to, from, next) => {
   store.dispatch('fetchCurrentUser')
   next()
 })
+
+async function redirectToOriginalUrl(shortUrl) {
+  try {
+    const { data } = await apiHelper.get(`/${shortUrl}`);
+    return data.data.originalUrl;
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export default router
